@@ -10,12 +10,8 @@ interface Props {
   task: Flex.ITask;
 }
 export const componentName = FlexComponent.TaskInfoPanel;
-export const componentHook = function addHistoryToTaskInfoPanel(flex: typeof Flex, manager: Flex.Manager) {
+export const componentHook = function addHistoryToTaskInfoPanel(flex: typeof Flex) {
   if (!isFeatureEnabled()) return;
-
-  const options: Flex.ContentFragmentProps = { sortOrder: -1 };
-  // console.log("serverless domain: ",process.env.SERVERLESS_DOMAIN_URL);
-
   Flex.setProviders({
     PasteThemeProvider: CustomizationProvider,
   });
