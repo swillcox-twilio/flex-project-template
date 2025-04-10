@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Button, ITask, Icon, withTaskContext } from '@twilio/flex-ui';
+import { ITask, Icon, withTaskContext } from '@twilio/flex-ui';
 import { Disclosure, DisclosureHeading, DisclosureContent } from '@twilio-paste/core/disclosure';
 import { Box } from '@twilio-paste/core/box';
 import { Text } from '@twilio-paste/core/text';
-import { Input } from '@twilio-paste/core/input';
-import { SearchIcon } from '@twilio-paste/icons/esm/SearchIcon';
 
 import { ConversationTrimmed } from '../../types';
 import ConversationHistoryMessages from './ConversationHistoryMessages';
