@@ -1,3 +1,5 @@
+const { identity } = require('lodash');
+
 const { prepareFlexFunction, extractStandardResponse, twilioExecute } = require(Runtime.getFunctions()[
   'common/helpers/function-helper'
 ].path);
@@ -41,8 +43,18 @@ exports.handler = prepareFlexFunction(requiredParameters, async (context, event,
       });
     });
 
+    // Fetch conversations with chat user number, from aged date smsAddress will be the identiy for these
+    const conversationsListChat = await twilioExecute(context, (client) => {
+      return client.conversations.v1.participantConversations.list({
+        identity: smsAddress,
+        startDate,
+        limit: MAX_CONVERSATIONS_TO_FETCH,
+      });
+    });
+
     // Combine conversation lists and sort by date created
-    const conversationsList = conversationsListNumber.data.concat(conversationsListWA.data);
+    let conversationsList = conversationsListNumber.data.concat(conversationsListWA.data);
+    conversationsList = conversationsList.concat(conversationsListChat.data);
     // remove those that are not to be presented
     if (MAX_CONVERSATIONS_TO_FETCH > MAX_CONVERSATIONS_TO_PRESENT) {
       conversationsList.splice(MAX_CONVERSATIONS_TO_PRESENT, MAX_CONVERSATIONS_TO_FETCH - MAX_CONVERSATIONS_TO_PRESENT);
